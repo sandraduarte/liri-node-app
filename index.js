@@ -11,10 +11,10 @@ request('http://www.google.com', function (error, response, body) {
 var Twitter = require('twitter');
  
 var client = new Twitter({
-  consumer_key: '',
-  consumer_secret: '',
-  access_token_key: '',
-  access_token_secret: ''
+  consumer_key: 'uWStbDRVIeAQ726pesIKAfjHv',
+  consumer_secret: 'oLfDUQGJZYqEXONGcXjPOWlJSSqBbYXcqBzcsHUe3oQVQiZ8dT',
+  access_token_key: '755516739409080320-RtLsjFudy3lY4RqbbTFlC4w2S6x0x35',
+  access_token_secret: 'IS0fvjYeSJSsAeIwweBdAxgtdoDacXCH8W3uUEy1PV0OK'
 });
  
 var params = {screen_name: 'nodejs'};
