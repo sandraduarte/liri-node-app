@@ -1,4 +1,4 @@
-var keys = ('./keys.js');
+var keys = require('./keys.js');
 
 // libraries
 var request = require('request');
@@ -36,7 +36,7 @@ function commands(command) {
           break;
 
       default: 
-      console.log("switch error");
+      console.log("Enter a command");
       break;
 
 }
@@ -57,6 +57,7 @@ function myTweets (){
         for (var i=0; i<tweets.length; i++){
           var tweet=tweets[i].created_at + ' ' + tweets[i].text + ' ';
           console.log(tweet);
+          console.log("_____________________________________");
         }
 
       }
