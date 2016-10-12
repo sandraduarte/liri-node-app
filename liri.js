@@ -1,50 +1,75 @@
+var keys = ('./keys.js');
 
-// the first command to be entered following node filename
+// libraries
+var request = require('request');
+var Twitter = require('twitter');
+var fs = require('fs');
+var spotify = require('spotify');
+var client = new Twitter(keys.twitterKeys);
+
+
+// the first & second commands to be entered following node filename
 var command = process.argv[2];
 var input = process.argv[3];
-switch (command) {
-    case 'my-tweets':
-        myTweets();
-        break;
 
-    case 'spotify-this-song':
-        spotifyThisSong();
-        break;
+commands(command);
 
-    case 'movie-this':
-        movieThis();
-        break;
 
-    case 'do-what-it-says':
-        justDoIt();
-        break;
+function commands(command) {
+  console.log("You chose: " + command);
+  console.log ("__________________");
+    switch (command) {
+      case "my-tweets":
+          myTweets();
+          break;
+
+      case 'spotify-this-song':
+          spotifyThisSong();
+          break;
+
+      case 'movie-this':
+          movieThis();
+          break;
+
+      case 'do-what-it-says':
+          justDoIt();
+          break;
+
+      default: 
+      console.log("switch error");
+      break;
 
 }
 
+}
+  
   // TWITTER
 
 function myTweets (){
-var Twitter = require('twitter');
-var client = new Twitter({
-    consumer_key: 'uWStbDRVIeAQ726pesIKAfjHv',
-  consumer_secret: 'oLfDUQGJZYqEXONGcXjPOWlJSSqBbYXcqBzcsHUe3oQVQiZ8dT',
-  access_token_key: '755516739409080320-R',
-  access_token_secret: 'IS0fvjYeSJSsAeIwweBdAxgtdoDacXCH8W3uUEy1PV0OK',
-});
-// var client = require('./keys.js');
+  // var client = new Twitter(keys.twitterKeys);
+  var params = {
+    screen_name: "lash411info", 
+    count:20
+  };
+  client.get('statuses/user_timeline', params, function(error, tweets, response) {
 
-var params = { screen_name: 'lash411info'};
-client.get('statuses/user_timeline', params, function(error, tweets, response) {
-    if (!error) {
-        console.log(tweets);
-    }
+      if (!error) {
+        for (var i=0; i<tweets.length; i++){
+          var tweet=tweets[i].created_at + ' ' + tweets[i].text + ' ';
+          console.log(tweet);
+        }
+
+      }
+      else {
+        console.log("there's a TWEET error");
+        console.log(error);
+      }
 });
 }
 
 //SPOTIFY
 
 function spotifyThisSong(){
-  var spotify = require('spotify');
   var songName=input;
 
   spotify.search({ type: 'track', query: songName }, function(err, data) {
@@ -58,10 +83,9 @@ function spotifyThisSong(){
 
   }
   
-// OMDB REQUEST
+// // OMDB REQUEST
 
 function movieThis(){
-  var request = require('request');
   var movieName = input;
 
   // Then run a request to the OMDB API with the movie specified 
@@ -93,13 +117,12 @@ function movieThis(){
 
 function justDoIt() {}
 //LOAD FS PACKAGE TO READ/WRITE
-var fs = require('fs');
 
 
 
-myTweets();
-spotifyThisSong();
-movieThis();
-justDoIt();
+// myTweets();
+// spotifyThisSong();
+// movieThis();
+// justDoIt();
 
 
