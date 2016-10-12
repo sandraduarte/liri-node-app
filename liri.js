@@ -24,11 +24,11 @@ function commands(command) {
           break;
 
       case 'spotify-this-song':
-          spotifyThisSong();
+          spotifyThisSong(input);
           break;
 
       case 'movie-this':
-          movieThis();
+          movieThis(input);
           break;
 
       case 'do-what-it-says':
@@ -78,7 +78,23 @@ function spotifyThisSong(){
           console.log('Error occurred: ' + err);
           return;
       }
+      for(var i = 0; i < data.tracks.items.length; i++) {
+        var track = data.tracks.items[i];
 
+        if(track.name.toLowerCase() == process.argv[3].toLowerCase()){
+          var artists = [];
+          for(var j = 0; j < track.artists.length; j++) {
+            artists.push(track.artists[j].name);
+          }
+          console.log("Song Name: " + songName);
+          console.log("Artist(s):  " + artists); 
+          console.log("Name: " + track.name) ;
+          console.log("Album:   " + track.album.name);
+          console.log("Preview:  " + track.preview_url); 
+          
+          return;
+        }
+      }
       // Do something with 'data' 
   });
 
