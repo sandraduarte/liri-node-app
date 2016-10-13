@@ -71,9 +71,14 @@ function myTweets (){
 //SPOTIFY
 
 function spotifyThisSong(){
-  var songName=input;
 
-  spotify.search({ type: 'track', query: songName }, function(err, data) {
+
+  spotify.search({ 
+    type: 'track', 
+    query: input, 
+  }, 
+
+    function(err, data) {
       if (err) {
           console.log('Error occurred: ' + err);
           return;
@@ -81,24 +86,61 @@ function spotifyThisSong(){
       for(var i = 0; i < data.tracks.items.length; i++) {
         var track = data.tracks.items[i];
 
-        if(track.name.toLowerCase() == process.argv[3].toLowerCase()){
+        if(track.name == input){
           var artists = [];
           for(var j = 0; j < track.artists.length; j++) {
             artists.push(track.artists[j].name);
           }
-          console.log("Song Name: " + songName);
+          
           console.log("Artist(s):  " + artists); 
           console.log("Name: " + track.name) ;
           console.log("Album:   " + track.album.name);
           console.log("Preview:  " + track.preview_url); 
           
           return;
-        }
-      }
-      // Do something with 'data' 
-  });
-
+        } 
+  
   }
+});
+
+
+   if (!input){
+    input = "The Sign";
+    
+    spotify.search({ 
+    type: 'track', 
+    query: input 
+  }, 
+
+    function(err, data) {
+      if (err) {
+          console.log('Error occurred: ' + err);
+          return;
+      }
+      for(var i = 0; i < data.tracks.items.length; i++) {
+        var track = data.tracks.items[i];
+
+        if(track.name == input){
+          var artists = [];
+          for(var j = 0; j < track.artists.length; j++) {
+            artists.push(track.artists[j].name);
+          }
+          
+          console.log("Artist(s):  " + artists); 
+          console.log("Name: " + track.name) ;
+          console.log("Album:   " + track.album.name);
+          console.log("Preview:  " + track.preview_url); 
+          
+          return;
+        } 
+      
+  }
+});
+  }
+  
+}
+
+  
   
 // // OMDB REQUEST
 
@@ -141,5 +183,4 @@ function justDoIt() {}
 // spotifyThisSong();
 // movieThis();
 // justDoIt();
-
 
