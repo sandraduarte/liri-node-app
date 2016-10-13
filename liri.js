@@ -12,10 +12,11 @@ var client = new Twitter(keys.twitterKeys);
 var command = process.argv[2];
 var input = process.argv[3];
 
-commands(command);
+commands(process.argv[2], process.argv[3]);
 
 
-function commands(command) {
+
+function commands(command,input) {
   console.log("You chose: " + command);
   console.log ("__________________");
     switch (command) {
@@ -42,7 +43,7 @@ function commands(command) {
 }
 
 }
-  
+
   // TWITTER
 
 function myTweets (){
@@ -146,8 +147,8 @@ function spotifyThisSong(){
 // // OMDB REQUEST
 
 function movieThis(){
-
-  // Then run a request to the OMDB API with the movie specified 
+if (input){
+// Then run a request to the OMDB API with the movie specified 
   var queryUrl = 'http://www.omdbapi.com/?t=' + input + '&y=&plot=short&r=json';
 
   request(queryUrl, 
@@ -172,9 +173,12 @@ function movieThis(){
   }
  );
 
+}
+  
+
         // If there is no movie input, return "Mr. Nobody" by default
 
-  if (!input){
+ else if (!input){
     input = "Mr.Nobody";
 
     var queryUrl2 = 'http://www.omdbapi.com/?t=' + input + '&y=&plot=short&r=json';
@@ -206,14 +210,43 @@ function movieThis(){
 
 
 
-  }
+  } //finish  movie-this
   
 
-function justDoIt() {}
-//LOAD FS PACKAGE TO READ/WRITE
+function justDoIt() {
+  
+  fs.readFile("random.txt", "utf8", 
 
+    function(error, data) {
+        // console.log(data);
+      var parameters = data.split(",");    
+         
+      input = parameters[1].replace(/"/g ," ").trim();
+     console.log(input);
+            // commands(parameters[0],input);
+    commands(parameters[0],input);
+   
 
+  });
 
+}
+
+// appending commands to log.txt
+function log(data) {
+  
+  fs.appendFile('log.txt', data + ",", 
+    function (error) {
+      var parameters = data.split(",");
+      for (var i=0; i<parameters.length; i++){
+        // console.log(parameters);
+
+      } 
+      if(error){
+      console.log(error);
+    }
+  });
+}
+log(command);
 // myTweets();
 // spotifyThisSong();
 // movieThis();
