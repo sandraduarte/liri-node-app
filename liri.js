@@ -69,6 +69,7 @@ function myTweets (){
 }
 
 //SPOTIFY
+// Take song input and return Name, Artist, Preview, etc results 
 
 function spotifyThisSong(){
 
@@ -103,7 +104,7 @@ function spotifyThisSong(){
   }
 });
 
-
+// If there is no song input, return "The Sign" by Ace of Base by default
    if (!input){
     input = "The Sign";
     
@@ -138,19 +139,20 @@ function spotifyThisSong(){
 });
   }
   
-}
+} //Finish Spotify
 
   
   
 // // OMDB REQUEST
 
 function movieThis(){
-  var movieName = input;
 
   // Then run a request to the OMDB API with the movie specified 
-  var queryUrl = 'http://www.omdbapi.com/?t=' + movieName + '&y=&plot=short&r=json';
+  var queryUrl = 'http://www.omdbapi.com/?t=' + input + '&y=&plot=short&r=json';
 
-  request(queryUrl, function(error, response, body) {
+  request(queryUrl, 
+
+    function(error, response, body) {
 
       // If the request is successful (i.e. if the response status code is 200)
       if (!error && response.statusCode == 200) {
@@ -167,10 +169,43 @@ function movieThis(){
           console.log("______________________");
       
       }
-      
+  }
+ );
 
+        // If there is no movie input, return "Mr. Nobody" by default
+
+  if (!input){
+    input = "Mr.Nobody";
+
+    var queryUrl2 = 'http://www.omdbapi.com/?t=' + input + '&y=&plot=short&r=json';
+
+
+  request(queryUrl2, 
+
+    function(error, response, body) {
+
+      // If the request is successful (i.e. if the response status code is 200)
+      if (!error && response.statusCode == 200) {
+
+          console.log("Title: " + JSON.parse(body)["Title"]);
+          console.log("Release Year: " + JSON.parse(body)["Year"]);
+          console.log("Rating: " + JSON.parse(body)["Rated"]);
+          console.log("Country: " + JSON.parse(body)["Country"]);
+          console.log("Language: " + JSON.parse(body)["Language"] );
+          console.log("Plot: " + JSON.parse(body)["Plot"]);
+          console.log("Actors: " + JSON.parse(body)["Actors"]);
+          // console.log("Rotten Tomates Rating: " + );
+          // console.log("Rotten Tomates URL: " + );
+          console.log("______________________");
       
-    });
+      }
+  }
+ );
+
+}
+
+
+
   }
   
 
